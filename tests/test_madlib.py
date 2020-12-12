@@ -29,7 +29,7 @@ def test_merge():
     expected = "It was a dark and stormy night."
     assert actual == expected
 
-@pytest.mark.skip()
+
 def test_read_template_raises_exception_with_bad_path():
 
     with pytest.raises(FileNotFoundError):
