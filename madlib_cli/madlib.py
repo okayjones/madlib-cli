@@ -10,7 +10,7 @@ welcome_text = """
 
 Provide creative inputs to build your own story. 
 
-            Enter 'quit' at anytime.
+            Enter 'quit' at any time.
 
 *************************************************
 """
@@ -121,7 +121,7 @@ def save_output(string: str):
         file.write(string)
 
 
-def start()
+def start():
     """Runs the MabLibs CLI
     """
 
