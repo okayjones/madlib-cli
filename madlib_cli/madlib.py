@@ -26,20 +26,44 @@ result_text = """
 
 
 def welcome():
+    """Prints welcome text for the user.
+    """
     print(welcome_text)
 
 
 def word_prompt(word_type: str):
+    """Prompts a user for a specific type of word or phrase (e.g. Adjective, Name)
+
+    Args:
+        word_type (str): Type of word of phrase
+
+    Returns:
+        (str): User input
+    """
     prompt = f"\nEnter a(n) {word_type}:\n> "
-    return prompt
+    user_input = input(prompt).strip()
+    return user_input
 
 
-def print_result(string: str):
+def print_result(story: str):
+    """Prints story for the user.
+
+    Args:
+        story (str): Final story
+    """
     print(result_text)
-    print(string)
+    print(story)
 
 
 def read_template(path: str):
+    """Reads a file and returns the content as a string.
+
+    Args:
+        path (str): File path
+
+    Returns:
+        [str]: Content of the file
+    """
     try:
         with open(path, "r") as file:
             return file.read()
@@ -48,6 +72,15 @@ def read_template(path: str):
 
 
 def parse_template(string: str):
+    """Parses text for phrases wihin brackets. Returns text with phrases stripped, and a tuple of the removed phrases.
+
+    Args:
+        string (str): Text to parse
+
+    Returns:
+        str: Stripped text 
+        tuple: Tuple of removed phrases
+    """
 
     regex = r"{([^}]*)}"
     subst = "{}"
@@ -59,6 +92,15 @@ def parse_template(string: str):
 
 
 def merge(string: str, words: tuple):
+    """Merges a madlibs template with a tuple of phrases.
+
+    Args:
+        string (str): template
+        words (tuple): phrases
+
+    Returns:
+        [str]: Merged story
+    """
 
     regex = r"{}"
     matches = re.finditer(regex, string)
@@ -70,11 +112,18 @@ def merge(string: str, words: tuple):
 
 
 def save_output(string: str):
+    """Saves provided text in a .txt file
+
+    Args:
+        string (str): text
+    """
     with open(result_path, "w") as file:
         file.write(string)
 
 
-def start():
+def start()
+    """Runs the MabLibs CLI
+    """
 
     welcome()
 
@@ -83,7 +132,7 @@ def start():
     new_words = []
 
     for part in parts:
-        new_word = input(word_prompt(part)).strip()
+        new_word = word_prompt(part)
         if new_word.lower() == "quit":
             quit()
         else:
