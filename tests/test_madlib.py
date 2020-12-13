@@ -1,10 +1,6 @@
+
 import pytest
-from madlib_cli import __version__
 from madlib_cli.madlib import read_template, parse_template, merge
-
-
-def test_version():
-    assert __version__ == '0.1.0'
 
 
 def test_read_template_returns_stripped_string():
@@ -35,4 +31,3 @@ def test_read_template_raises_exception_with_bad_path():
     with pytest.raises(FileNotFoundError):
         path = "missing.txt"
         read_template(path)
-
