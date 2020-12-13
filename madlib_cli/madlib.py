@@ -1,13 +1,27 @@
 import re
 
+template_path = "../assets/template.txt"
+result_path = "../assets/result.txt"
+
 welcome_text = """
-*************************************************************************
+*************************************************
 
-Welcome to MadLibs!
+              Welcome to MadLibs!
 
-Provide creative inputs to build your own story. Enter 'quit' at anytime.
+Provide creative inputs to build your own story. 
 
-*************************************************************************
+            Enter 'quit' at anytime.
+
+*************************************************
+"""
+
+result_text = """
+*************************************************
+
+           Thanks for playing MadLibs!
+         Find your completed story below.
+
+*************************************************
 """
 
 
@@ -15,14 +29,19 @@ def welcome():
     print(welcome_text)
 
 
-def word_prompt(word_type):
+def word_prompt(word_type: str):
     prompt = f"\nEnter a(n) {word_type}:\n> "
     return prompt
-   
+
+
+def print_result(string: str):
+    print(result_text)
+    print(string)
+
 
 def read_template(path: str):
     try:
-        with open(path, 'r') as file:
+        with open(path, "r") as file:
             return file.read()
     except FileNotFoundError:
         raise
@@ -41,33 +60,42 @@ def parse_template(string: str):
 
 def merge(string: str, words: tuple):
 
-    regex = r'{}'
+    regex = r"{}"
     matches = re.finditer(regex, string)
 
     for word in words:
         string = re.sub(regex, word, string, 1)
-    
+
     return string
 
 
-def madlibs():
-    
-    template = read_template('../assets/template.txt')
-    stripped, parts = parse_template(template)
+def save_output(string: str):
+    with open(result_path, "w") as file:
+        file.write(string)
 
+
+def start():
+
+    welcome()
+
+    template = read_template(template_path)
+    stripped, parts = parse_template(template)
     new_words = []
 
     for part in parts:
-        new_word = input(word_prompt(part))
-        if new_word == 'quit':
+        new_word = input(word_prompt(part)).strip()
+        if new_word.lower() == "quit":
             quit()
         else:
             new_words.append(new_word)
-    
-    new = merge(stripped, tuple(new_words))
-    print(new)
+
+    story = merge(stripped, tuple(new_words))
+
+    print_result(story)
+
+    save_output(story)
 
 
 # Run it
-welcome()
-madlibs()
+if __name__ == "__main__":
+    start()
